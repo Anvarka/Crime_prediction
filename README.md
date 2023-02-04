@@ -1,15 +1,15 @@
 # Crime_prediction
 
-Для начала мы немного упростили задачу и пытались предсказать количество преступлений. Сначала использовали LSTM(находится в BaseLine).
+To begin with, we simplified the task a bit and tried to predict the number of crimes. First we used LSTM (found in BaseLine).
 
-Сделали обзор литературы и поняли, что нужны модели временного ряда. Взяли prophet, также рассматривали ARIMA. 
+We did a literature review and realized that time series models were needed. Took prophet, also considered ARIMA.
 
-Разобрались с документацией Prophet и написали пока код, который предсказывает частоту преступлений во временном ряду. В качестве событий для prophet-a добавили преступления(holidays)
+We figured out the Prophet documentation and wrote a code that predicts the frequency of crimes in a time series. Added crimes(holidays) as events for prophet-a
 
 Dataset: https://data.world/kylesykes/st-louis-city-crime-data
 
 Model: prophet
 
-Дальнейшие планы: дело в том, что prophet принимает ds и y. ds -- дата, y -- target. Сейчас в качестве target берется количество преступлений за текущую дату, к нему добавляются преступления как события. Однако модель обучится предсказывать количество преступлений в будущем. Мы не хотим такого, хотим же мы тип, время и место. Чтобы это исправить, предлагается передавать one_hot vector(единица там, какой тип преступления произошел). Однако нужно еще привязать место к этому вектору. Предлагается сделать еще один вектор one-hot для локации и его сконкатенировать с первым.
+Further plans: the fact is that prophet accepts ds and y. ds -- date, y -- target. Now the number of crimes for the current date is taken as the target, crimes are added to it as events. However, the model will learn to predict the number of crimes in the future. We do not want this, we want the type, time and place. To fix this, it is proposed to pass a one_hot vector (one there, what type of crime happened). However, you still need to bind the place to this vector. It is proposed to make another one-hot vector for the location and concatenate it with the first one.
 
-Как будет работать: на вход будет подаваться время(можно просто сделать future = model.make_future_dataframe(periods = 365)), на выходе получим вектор, из которого можно будет достать информацию о месте и типе преступления.
+How it will work: time will be given as input (you can simply do future = model.make_future_dataframe(periods = 365)), at the output we will get a vector from which it will be possible to get information about the place and type of crime.
